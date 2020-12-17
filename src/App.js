@@ -7,24 +7,45 @@ import 'reactjs-popup/dist/index.css';
 function App() {
   const [dropdown, setDropdown] = useState(false);
   const {register, handleSubmit }= useForm();
-  var restaurants = [
+  const [edit, setEdit] = useState("Edit Restaurants");
+  let restaurants = [
     "Chipotle",
     "Qdoba",
     "Noodles and Company",
-    "Ramen",
+    "Panda Express",
+    "Ramen Place",
     "Maru Sushi",
-    "Potbelly",
-    "Jimmy Johns",
-    "Einsteins"
+    "PotBellys",
+    "Jimmy Johns"
   ];
   
-  var randomItem = restaurants[Math.floor(Math.random()*restaurants.length)];
+  const [randomRestaurant, setRandomRestaurant] = useState(restaurants[Math.floor(Math.random()*restaurants.length)]);
 
   const onSubmit = data => {
     console.log(data)
-    console.log(randomItem)
+    
 
   };
+  
+  const handelInputChange = event => {
+    let restaurantsCopy = restaurants;
+    const target = event.target;
+    const name = target.name;
+    var index = restaurantsCopy.indexOf(name);
+
+    if (index == -1) {
+      restaurantsCopy[restaurantsCopy.length] = name;
+    
+    }
+    else {
+      restaurantsCopy.splice(index, 1);
+
+    }
+    restaurants = restaurantsCopy;
+    console.log(restaurants)
+    setRandomRestaurant(restaurants[Math.floor(Math.random()*restaurants.length)]);
+    console.log(randomRestaurant)
+  }
 
 
   useEffect(() => {
@@ -37,52 +58,71 @@ function App() {
         <button className="button" onClick={() => {
           if (dropdown) {
             setDropdown(false);
+            setEdit("Edit Restaurant Options")
           } else {
             setDropdown(true);
+            setEdit("Stop Editing")
           }}}>
-          Pick Random
+          {edit}
         </button>
       </header>
-      <Popup trigger={<button>All Food Options</button>} modal>
-        <div>Chipotle</div>
-        <div>Qdoba</div>
-        <div>Noodles and Company</div>
-        <div>Panda Express</div>
-        <div>Jimmy Johns</div>
-        <div>Potbellys</div>
-        <div>Maru Sushi</div>
-        <div>Einsteins</div>
-        <div>Ramen Place</div>
-      </Popup>
-      <button className="button" onClick={() => {
-          if (dropdown) {
-            setDropdown(false);
-          } else {
-            setDropdown(true);
-          }}}>
-          Pick Random
-        </button>
+      <p></p>
       {dropdown &&
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <label className="label">Enter Location: </label>
-          <input ref={register} name="location"/>
-          <label className="label">Enter Food Type: </label>
-          <select name="foodType" ref={register}>
-            <option value="fastFood">Fast Food</option>
-            <option value="sitDown">Sit Down</option>
-            <option value="other">other</option>
-          </select>
-          <label className="label">Enter Price Range: </label>
-          <select name="price" ref={register}>
-            <option value="$">$</option>
-            <option value="$$">$$</option>
-            <option value="$$$">$$$</option>
-          </select>
-          <button className="submitButton">Submit</button>
+        <form  className="form" onSubmit={handleSubmit(onSubmit)}>
+          <label> <input
+            type="checkbox"
+            name="Chipotle"
+            onChange={handelInputChange}
+            />Chipotle</label>
+          <p></p>
+          <label> <input
+            type="checkbox"
+            name="Qdoba"
+            onChange={handelInputChange}
+            />Qdoba</label> 
+            <p></p>
+          <label> <input
+            type="checkbox"
+            name="Noodles and Company"
+            onChange={handelInputChange}
+            />Noodles and Company</label> 
+            <p></p>
+          <label> <input
+            type="checkbox"
+            name="Panda Express"
+            onChange={handelInputChange}
+            />Panda Express</label>
+            <p></p>
+          <label> <input
+            type="checkbox"
+            name="Jimmy Johns"
+            onChange={handelInputChange}
+            />Jimmy Johns</label>
+            <p></p>
+          <label> <input
+            type="checkbox"
+            name="PotBellys"
+            onChange={handelInputChange}
+            />PotBellys</label>
+            <p></p>
+          <label> <input
+            type="checkbox"
+            name="Maru Sushi"
+            onChange={handelInputChange}
+            />Maru Sushi</label>
+            <p></p>
+          <label> <input
+            type="checkbox"
+            name="Ramen Place"
+            onChange={handelInputChange}
+            />Ramen Place</label>
+            <p></p>
+           
         </form>
-
-
       }
+      <Popup trigger={<button className="submitButton">Pick Random Restaurant</button>} modal>{randomRestaurant}</Popup>
+
+     
   
     </div>
   );
