@@ -32,7 +32,6 @@ function App() {
     const target = event.target;
     const name = target.name;
     var index = restaurantsCopy.indexOf(name);
-
     if (index == -1) {
       restaurantsCopy[restaurantsCopy.length] = name;
     
@@ -54,11 +53,11 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">
+      <header className="p">
         <button className="button" onClick={() => {
           if (dropdown) {
             setDropdown(false);
-            setEdit("Edit Restaurant Options")
+            setEdit("View/Edit Restaurant Options")
           } else {
             setDropdown(true);
             setEdit("Stop Editing")
@@ -66,8 +65,9 @@ function App() {
           {edit}
         </button>
       </header>
-      <p></p>
       {dropdown &&
+      <div>
+        <p className="p">Select Restaurants that you do not want to eat at</p>
         <form  className="form" onSubmit={handleSubmit(onSubmit)}>
           <label> <input
             type="checkbox"
@@ -117,9 +117,11 @@ function App() {
             onChange={handelInputChange}
             />Ramen Place</label>
             <p></p>
-           
-        </form>
+        
+          </form>
+        </div>
       }
+      <p></p>
       <Popup trigger={<button className="submitButton">Pick Random Restaurant</button>} modal>{randomRestaurant}</Popup>
 
      

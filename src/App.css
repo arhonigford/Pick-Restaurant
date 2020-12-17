@@ -8,6 +8,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
+.p {
+
+  border: none;
+  color: white;
+  text-decoration: none;
+
+  font-size: 15px;
+}
 .button {
   background-color: #CFB53B; /* Dark Cyan */
   border: none;
